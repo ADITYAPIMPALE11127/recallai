@@ -10,7 +10,7 @@ export const Heading = () => {
   const { isSignedIn, isLoaded } = useAuth();
 
   return (
-    <div className="max-w-3xl space-y-4">
+    <div className="max-w-3xl space-y-4" style={{transform:'translateY(-50px)'}}>
 <h1 className="text-3xl font-bold sm:text-5xl md:text-5xl" style={{lineHeight:'62px'}}>
   📥 Capture. 🧠 Understand. <br/>🔁 Memorize.
 </h1>

@@ -9,7 +9,7 @@ export const Footer = () => {
       <div className="text-muted-foreground flex w-full items-center justify-end gap-x-1 md:ml-auto">
         <Button asChild variant="ghost" className="text-base">
           <Link
-            href=""
+            href="https://github.com/ADITYAPIMPALE11127/recallai"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open project on GitHub"
