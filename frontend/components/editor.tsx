@@ -158,6 +158,9 @@ const Editor = ({
   }, [editor]);
 
   const handleEditorChange = () => {
+    // Avoid heavy persistence / re-rendering on every minor editor change.
+    // Media playback can be interrupted if the parent page re-renders too often.
+    // (Content saving is debounced in the document page.)
     const currentUrls = getMediaUrls(editor);
     const previousUrls = trackedUrlsRef.current;
 

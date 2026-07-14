@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, use, useState, useEffect } from "react";
+import { useMemo, use, useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 
 import { Cover } from "@/components/cover";
@@ -98,6 +98,13 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
       if (!response.ok) throw new Error("Failed to update document");
 
+      // When only content changes, updating `doc` causes parent re-renders
+      // which can interrupt <audio>/<video> playback inside the editor.
+      // Editor already holds the live content, so we skip setDoc for content patches.
+      if (Object.prototype.hasOwnProperty.call(updates, "content")) {
+        return;
+      }
+
       const updatedDoc = await response.json();
       setDoc(updatedDoc);
     } catch (error) {
@@ -141,9 +148,29 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   const isSmallText = doc?.smallText ?? false;
   const showToc = doc?.showToc ?? true;
 
+  // Debounce saves to avoid remounting interrupting <audio>/<video> playback.
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const latestContentRef = useRef<string | null>(null);
+
   const onChange = (content: string) => {
-    updateDocument({ content });
+    latestContentRef.current = content;
+
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+
+    saveTimerRef.current = setTimeout(() => {
+      // Only save the latest content snapshot.
+      const latest = latestContentRef.current;
+      if (latest === undefined || latest === null) return;
+      updateDocument({ content: latest });
+    }, 600);
   };
+
+  // Cleanup debounce timer on unmount to prevent state updates after leaving.
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    };
+  }, []);
 
   if (doc === undefined || isFontLoading) {
     return (
