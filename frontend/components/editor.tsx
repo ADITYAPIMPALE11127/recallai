@@ -49,7 +49,14 @@ const schema = BlockNoteSchema.create().extend({
   },
 });
 
-const MEDIA_BLOCK_TYPES = new Set(["image", "video", "audio", "file"]);
+const MEDIA_BLOCK_TYPES = new Set([
+  "image",
+  "video",
+  "audio",
+  "file",
+  "pdf",
+]);
+
 
 const getMediaUrls = (editor: BlockNoteEditor): Set<string> => {
   const urls = new Set<string>();
@@ -203,7 +210,14 @@ const Editor = ({
     const prevBlock = editor.getPrevBlock(blockId);
     if (!prevBlock) return;
 
+    // If the user is clicking inside a media/file block, don't force a custom selection.
+    // This avoids Tiptap warnings like: "Position X is not within a blockContainer node".
+    const closestMediaBlock = (e.target as HTMLElement).closest<HTMLElement>(
+      "[data-node-type='blockContainer'][data-type='" + prevBlock?.type + "']",
+    );
     if (!MEDIA_BLOCK_TYPES.has(prevBlock?.type as string)) return;
+    if (closestMediaBlock) return;
+
 
     e.stopPropagation();
 
