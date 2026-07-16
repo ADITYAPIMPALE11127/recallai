@@ -1,0 +1,5 @@
+id,password,last_login,is_superuser,username,first_name,last_name,is_staff,is_active,date_joined,email,created_at,updated_at,clerk_id
+1,pbkdf2_sha256$870000$wc8laL38tgStZ6wy7E91zR$cH9YJncbwSY5oj4RzzMKDccyEnqmEIJ4hSDTPayFlUs=,2026-07-16 17:52:11.385942,1,Aditya24,,,1,1,2026-07-10 13:32:54.052966,pimpaleaditya2@gmail.com,2026-07-10 13:32:55.013241,2026-07-10 13:32:55.013252,
+2,pbkdf2_sha256$1200000$HAB1yfeaYoo5NnpDWdUEf8$MWZ9ETJ+s9eZyTpa7jfJraC14WcRWanadKCIiWK6c1c=,,0,rohan23,Rohan,Patil,0,1,2026-07-10 13:34:45.263492,adityapimpale@zohomail.in,2026-07-10 13:34:46.153621,2026-07-10 13:34:46.153629,
+3,,,0,user_user_3GM,,,0,1,2026-07-13 12:01:08.289651,user_user_3GM@temp.com,2026-07-13 12:01:08.289860,2026-07-14 18:53:05.592488,user_3GMdOQLgQlmRVVhRIi1PhmbyWl3
+4,,,0,user_user_3GS,,,0,1,2026-07-13 14:58:04.501257,user_user_3GS@temp.com,2026-07-13 14:58:04.501418,2026-07-16 18:19:54.992531,user_3GSASeZmBdalLKNTLU8SXwUMmG0
